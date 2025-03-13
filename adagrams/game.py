@@ -1,5 +1,6 @@
 from random import randint
 
+# function takes no parameters and returns array of ten strings representing 10 tiles of letters
 def draw_letters():
     pass
 
