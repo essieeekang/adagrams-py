@@ -1,38 +1,52 @@
 from random import randint
 
 # constants declaration
-LETTER_POOL = {
-    1: {'A': 9}, 
-    2: {'B': 2}, 
-    3: {'C': 2}, 
-    4: {'D': 4}, 
-    5: {'E': 12}, 
-    6: {'F': 2}, 
-    7: {'G': 3}, 
-    8: {'H': 2}, 
-    9: {'I': 9}, 
-    10: {'J': 1}, 
-    11: {'K': 1}, 
-    12: {'L': 4}, 
-    13: {'M': 2}, 
-    14: {'N': 6}, 
-    15: {'O': 8}, 
-    16: {'P': 2}, 
-    17: {'Q': 1}, 
-    18: {'R': 6}, 
-    19: {'S': 4}, 
-    20: {'T': 6}, 
-    21: {'U': 4}, 
-    22: {'V': 2}, 
-    23: {'W': 2}, 
-    24: {'X': 1}, 
-    25: {'Y': 2}, 
-    26: {'Z': 1}
-}
+LETTER_POOL = [
+    {"letter": "A", "count": 9, "value": 1},
+    {"letter": "B", "count": 2, "value": 3},
+    {"letter": "C", "count": 2, "value": 3},
+    {"letter": "D", "count": 4, "value": 2},
+    {"letter": "E", "count": 12, "value": 1},
+    {"letter": "F", "count": 2, "value": 4},
+    {"letter": "G", "count": 3, "value": 2},
+    {"letter": "H", "count": 2, "value": 4},
+    {"letter": "I", "count": 9, "value": 1},
+    {"letter": "J", "count": 1, "value": 8},
+    {"letter": "K", "count": 1, "value": 5},
+    {"letter": "L", "count": 4, "value": 1},
+    {"letter": "M", "count": 2, "value": 3},
+    {"letter": "N", "count": 6, "value": 1},
+    {"letter": "O", "count": 8, "value": 1},
+    {"letter": "P", "count": 2, "value": 3},
+    {"letter": "Q", "count": 1, "value": 10},
+    {"letter": "R", "count": 6, "value": 1},
+    {"letter": "S", "count": 4, "value": 1},
+    {"letter": "T", "count": 6, "value": 1},
+    {"letter": "U", "count": 4, "value": 1},
+    {"letter": "V", "count": 2, "value": 4},
+    {"letter": "W", "count": 2, "value": 4},
+    {"letter": "X", "count": 1, "value": 8},
+    {"letter": "Y", "count": 2, "value": 4},
+    {"letter": "Z", "count": 1, "value": 10}
+    ]
 
 # function takes no parameters and returns array of ten strings representing 10 tiles of letters
 def draw_letters():
-    pass
+    tile_count = []
+    hand = []
+    
+    for letter in LETTER_POOL:
+        tile_count.append(letter["count"])
+
+    while len(hand) < 10:
+        letter_id = randint(0, 25)
+        if tile_count[letter_id]:
+            hand.append(LETTER_POOL[letter_id]["letter"])
+            tile_count[letter_id] -= 1
+        else:
+            continue
+
+    return hand
 
 def uses_available_letters(word, letter_bank):
     pass
