@@ -40,6 +40,7 @@ def draw_letters():
 
     while len(hand) < 10:
         letter_id = randint(0, 25)
+
         if tile_count[letter_id]:
             hand.append(LETTER_POOL[letter_id]["letter"])
             tile_count[letter_id] -= 1
@@ -50,6 +51,7 @@ def draw_letters():
 
 def uses_available_letters(word, letter_bank):
     letter_bank = letter_bank.copy()
+
     for letter in word.upper():
         if letter in letter_bank:
             letter_bank.remove(letter)
@@ -60,10 +62,13 @@ def uses_available_letters(word, letter_bank):
 
 def score_word(word):
     score = 0
+
     if not word:
         return 0
+    
     if len(word) > 6:
         score += 8
+
     for letter in word.upper():
         index = get_index_from_letter(letter)
         score += LETTER_POOL[index]["value"]
@@ -71,7 +76,21 @@ def score_word(word):
     return score
 
 def get_highest_word_score(word_list):
-    pass
+    max_score = 0
+
+    for word in word_list:
+        current_score = score_word(word)
+        if current_score == max_score:
+            if len(highest_word) == 10:
+                continue
+            elif len(word) == 10:
+                highest_word = word
+            elif len(highest_word) > len(word):
+                highest_word = word
+        elif current_score > max_score:
+            max_score = current_score
+            highest_word = word
+    return highest_word, max_score
 
 # helper functions
 def get_index_from_letter(letter):
