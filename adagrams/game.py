@@ -59,7 +59,25 @@ def uses_available_letters(word, letter_bank):
     return True
 
 def score_word(word):
-    pass
+    score = 0
+    if not word:
+        return 0
+    if len(word) > 6:
+        score += 8
+    for letter in word.upper():
+        index = get_index_from_letter(letter)
+        score += LETTER_POOL[index]["value"]
+    
+    return score
 
 def get_highest_word_score(word_list):
     pass
+
+# helper functions
+def get_index_from_letter(letter):
+    index_map = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, 
+                "G": 6, "H": 7, "I": 8, "J": 9, "K": 10, "L": 11,
+                "M": 12, "N": 13, "O": 14, "P": 15, "Q": 16, "R": 17,
+                "S": 18, "T": 19, "U": 20, "V": 21, "W": 22, "X": 23,
+                "Y": 24, "Z": 25}
+    return index_map[letter]
