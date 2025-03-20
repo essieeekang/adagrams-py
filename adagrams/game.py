@@ -32,20 +32,18 @@ LETTER_POOL = [
 
 # function takes no parameters and returns array of ten strings representing 10 tiles of letters
 def draw_letters():
-    tile_count = []
+    tiles = []
     hand = []
-    
+
     for letter in LETTER_POOL:
-        tile_count.append(letter["count"])
+        for i in range(letter["count"]):
+            tiles.append(letter["letter"])
 
     while len(hand) < 10:
-        letter_id = randint(0, 25)
-
-        if tile_count[letter_id]:
-            hand.append(LETTER_POOL[letter_id]["letter"])
-            tile_count[letter_id] -= 1
-        else:
-            continue
+        tile_index = randint(0, len(tiles) - 1)
+        tile = tiles[tile_index]
+        hand.append(tile)
+        tiles.remove(tile)
 
     return hand
 
