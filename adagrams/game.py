@@ -1,43 +1,41 @@
 from random import randint
 
-# constants declaration
-LETTER_POOL = [
-    {"letter": "A", "count": 9, "value": 1},
-    {"letter": "B", "count": 2, "value": 3},
-    {"letter": "C", "count": 2, "value": 3},
-    {"letter": "D", "count": 4, "value": 2},
-    {"letter": "E", "count": 12, "value": 1},
-    {"letter": "F", "count": 2, "value": 4},
-    {"letter": "G", "count": 3, "value": 2},
-    {"letter": "H", "count": 2, "value": 4},
-    {"letter": "I", "count": 9, "value": 1},
-    {"letter": "J", "count": 1, "value": 8},
-    {"letter": "K", "count": 1, "value": 5},
-    {"letter": "L", "count": 4, "value": 1},
-    {"letter": "M", "count": 2, "value": 3},
-    {"letter": "N", "count": 6, "value": 1},
-    {"letter": "O", "count": 8, "value": 1},
-    {"letter": "P", "count": 2, "value": 3},
-    {"letter": "Q", "count": 1, "value": 10},
-    {"letter": "R", "count": 6, "value": 1},
-    {"letter": "S", "count": 4, "value": 1},
-    {"letter": "T", "count": 6, "value": 1},
-    {"letter": "U", "count": 4, "value": 1},
-    {"letter": "V", "count": 2, "value": 4},
-    {"letter": "W", "count": 2, "value": 4},
-    {"letter": "X", "count": 1, "value": 8},
-    {"letter": "Y", "count": 2, "value": 4},
-    {"letter": "Z", "count": 1, "value": 10}
-    ]
+LETTER_POOL = {
+    "A": {"count": 9, "score": 1},
+    "B": {"count": 2, "score": 3},
+    "C": {"count": 2, "score": 3},
+    "D": {"count": 4, "score": 2},
+    "E": {"count": 12, "score": 1},
+    "F": {"count": 2, "score": 4},
+    "G": {"count": 3, "score": 2},
+    "H": {"count": 2, "score": 4},
+    "I": {"count": 9, "score": 1},
+    "J": {"count": 1, "score": 8},
+    "K": {"count": 1, "score": 5},
+    "L": {"count": 4, "score": 1},
+    "M": {"count": 2, "score": 3},
+    "N": {"count": 6, "score": 1},
+    "O": {"count": 8, "score": 1},
+    "P": {"count": 2, "score": 3},
+    "Q": {"count": 1, "score": 10},
+    "R": {"count": 6, "score": 1},
+    "S": {"count": 4, "score": 1},
+    "T": {"count": 6, "score": 1},
+    "U": {"count": 4, "score": 1},
+    "V": {"count": 2, "score": 4},
+    "W": {"count": 2, "score": 4},
+    "X": {"count": 1, "score": 8},
+    "Y": {"count": 2, "score": 4},
+    "Z": {"count": 1, "score": 10}
+    }
 
-# function takes no parameters and returns array of ten strings representing 10 tiles of letters
 def draw_letters():
     tiles = []
     hand = []
 
-    for letter in LETTER_POOL:
-        for i in range(letter["count"]):
-            tiles.append(letter["letter"])
+    for letter, letter_data in LETTER_POOL.items():
+        for i in range(letter_data["count"]):
+            tiles.append(letter)
 
     while len(hand) < 10:
         tile_index = randint(0, len(tiles) - 1)
@@ -68,33 +66,27 @@ def score_word(word):
         score += 8
 
     for letter in word.upper():
-        index = get_index_from_letter(letter)
-        score += LETTER_POOL[index]["value"]
+        score += LETTER_POOL[letter]["score"]
     
     return score
 
 def get_highest_word_score(word_list):
-    max_score = 0
+    max_score = score_word(word_list[0])
+    highest_word = word_list[0]
 
-    for word in word_list:
-        current_score = score_word(word)
+    for current_word in word_list:
+        current_score = score_word(current_word)
+
         if current_score == max_score:
             if len(highest_word) == 10:
                 continue
-            elif len(word) == 10:
-                highest_word = word
-            elif len(highest_word) > len(word):
-                highest_word = word
+            elif len(current_word) == 10:
+                highest_word = current_word
+            elif len(highest_word) > len(current_word):
+                highest_word = current_word
+
         elif current_score > max_score:
             max_score = current_score
-            highest_word = word
-    return highest_word, max_score
+            highest_word = current_word
 
-# helper functions
-def get_index_from_letter(letter):
-    index_map = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, 
-                "G": 6, "H": 7, "I": 8, "J": 9, "K": 10, "L": 11,
-                "M": 12, "N": 13, "O": 14, "P": 15, "Q": 16, "R": 17,
-                "S": 18, "T": 19, "U": 20, "V": 21, "W": 22, "X": 23,
-                "Y": 24, "Z": 25}
-    return index_map[letter]
+    return highest_word, max_score
